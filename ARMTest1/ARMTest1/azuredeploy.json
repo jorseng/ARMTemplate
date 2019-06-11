@@ -9,9 +9,6 @@
       "defaultValue": "Southeast Asia",
       "type": "string"
     },
-    "ASAdmin": {
-      "type": "string"
-    },
     "StorageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -25,7 +22,8 @@
     },
     "ARMTest-VMName": {
       "type": "string",
-      "minLength": 1
+      "minLength": 1,
+      "defaultValue": "ARMTest-VM"
     },
     "ARMTest-VMAdminUserName": {
       "type": "string",
@@ -71,8 +69,7 @@
     "ARMTest-VMVnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'ARMTest-Vnet')]",
     "ARMTest-VMSubnetRef": "[concat(variables('ARMTest-VMVnetID'), '/subnets/', variables('ARMTest-VnetSubnet1Name'))]",
     "ARMTest-VMStorageAccountContainerName": "vhds",
-    "ARMTest-VMNicName": "[concat(parameters('ARMTest-VMName'), '-NIC')]",
-    "ARMTest-VM-PIPName": "ARMTest-VM-PIP"
+    "ARMTest-VMNicName": "[concat(parameters('ARMTest-VMName'), '-NIC')]"
   },
 
   "resources": [
@@ -188,22 +185,6 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('ARMTest-VMNicName'))]"
             }
           ]
-        }
-      }
-    },
-    {
-      "name": "[variables('ARMTest-VM-PIPName')]",
-      "type": "Microsoft.Network/publicIPAddresses",
-      "location": "[resourceGroup().location]",
-      "apiVersion": "2016-03-30",
-      "dependsOn": [ ],
-      "tags": {
-        "displayName": "ARMTest-VM-PIP"
-      },
-      "properties": {
-        "publicIPAllocationMethod": "Dynamic",
-        "dnsSettings": {
-          "domainNameLabel": "[parameters('ARMTest-VM-PIPDnsName')]"
         }
       }
     }
