@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "location": {
-      "defaultValue": "west us 2",
+      "defaultValue": "Southeast Asia",
       "type": "string"
     },
     "ASAdmin": {
