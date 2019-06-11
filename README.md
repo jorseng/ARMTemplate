@@ -11,4 +11,5 @@ https://azure.microsoft.com/en-gb/blog/deploy-to-azure-button-for-azure-websites
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-https://deploy.azure.com/?repository=https://github.com/jorseng/ARMTemplate/ARMTest1/ARMTest1
+
+https://github.com/kuharan/Azure-Button-Test/blob/master/azuredeploy.json
