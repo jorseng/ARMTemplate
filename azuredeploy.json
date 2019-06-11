@@ -12,11 +12,11 @@
     "ASAdmin": {
       "type": "string"
     },
-    "othertype": {
+    "armtestsaType": {
       "type": "string",
-      "defaultValue": "A",
+      "defaultValue": "Standard_LRS",
       "allowedValues": [
-        "B",
+        "Standard_LRS",
         "Standard_ZRS",
         "Standard_GRS",
         "Standard_RAGRS",
@@ -32,7 +32,7 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2016-01-01",
       "sku": {
-        "name": "Standard_LRS"
+        "name": "[parameters('armtestsaType')]"
       },
       "dependsOn": [ ],
       "tags": {
