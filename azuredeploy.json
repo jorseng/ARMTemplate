@@ -12,7 +12,7 @@
     "ASAdmin": {
       "type": "string"
     },
-    "armtestsaType": {
+    "StorageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
       "allowedValues": [
@@ -25,14 +25,18 @@
     }
   },
 
+  "variables": {
+    "ARMTest-StorageAccountName": "ARMTest-SA"
+  },
+
   "resources": [
     {
       "name": "[variables('armtestsaName')]",
       "type": "Microsoft.Storage/storageAccounts",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "apiVersion": "2016-01-01",
       "sku": {
-        "name": "[parameters('armtestsaType')]"
+        "name": "[parameters('StorageAccountType')]"
       },
       "dependsOn": [ ],
       "tags": {
@@ -40,8 +44,5 @@
       },
       "kind": "Storage"
     }
-  ],
-  "variables": {
-    "armtestsaName": "[concat('armtestsa', uniqueString(resourceGroup().id))]"
-  }
+  ]
 }
