@@ -2,13 +2,11 @@
 For storing and testing ARM Templates
 
 
-Azure deploy button
+Deploy to Azure Reference link:
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+https://azure.microsoft.com/en-gb/blog/deploy-to-azure-button-for-azure-websites-2/
 
 
-HTML Tag for Deploy Button
-<a href="https://azuredeploy.net/" target="_blank">
-    <br>
+<a href="https://azuredeploy.net/?repository=https://github.com/jorseng/ARMTemplate" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
