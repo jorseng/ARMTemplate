@@ -119,8 +119,7 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2016-03-30",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks', 'ARMTest-Vnet')]",
-        "[resourceId('Microsoft.Network/publicIPAddresses', variables('ARMTest-VM-PIPName'))]"
+        "[resourceId('Microsoft.Network/virtualNetworks', 'ARMTest-Vnet')]"
       ],
       "tags": {
         "displayName": "ARMTest-VMNic"
@@ -133,9 +132,6 @@
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
                 "id": "[variables('ARMTest-VMSubnetRef')]"
-              },
-              "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('ARMTest-VM-PIPName'))]"
               }
             }
           }
