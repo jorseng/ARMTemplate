@@ -54,7 +54,7 @@
 
   "variables": {
     "ARMTest_ResourceGroupName": "ARMTest-RG",
-    "ARMTest_StorageAccountName": "ARMTest-SA",
+    "ARMTest_StorageAccountName": "jsarmteststorageaccount",
     "ARMTest-VnetPrefix": "10.0.0.0/16",
     "ARMTest-VnetSubnet1Name": "ARMTest_Subnet",
     "ARMTest-VnetSubnet1Prefix": "10.0.0.0/24",
