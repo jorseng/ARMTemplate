@@ -4,4 +4,9 @@
   "parameters": {
     "ARMTest-VMAdminUserName": {
       "value": "jorseng"
-    }}
+    },
+    "ARMTest-VMAdminPassword": {
+      "value": "jorPasssengw0rd"
+    }
+  }
+}
