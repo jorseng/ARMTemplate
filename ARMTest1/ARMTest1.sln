@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29001.49
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "ARMTest1", "ARMTest1\ARMTest1.deployproj", "{4E2773A6-7E25-4F74-B75D-8CF68E94B2DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E2773A6-7E25-4F74-B75D-8CF68E94B2DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E2773A6-7E25-4F74-B75D-8CF68E94B2DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E2773A6-7E25-4F74-B75D-8CF68E94B2DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E2773A6-7E25-4F74-B75D-8CF68E94B2DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1D4F6221-424A-4B78-B7C2-26C9D273CA1A}
+	EndGlobalSection
+EndGlobal
