@@ -6,13 +6,13 @@
 
   "parameters": {
     "location": {
-      "defaultValue": "west us 2",
+      "defaultValue": "Southeast Asia",
       "type": "string"
     },
     "ASAdmin": {
       "type": "string"
     },
-    "armtestsaType": {
+    "StorageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
       "allowedValues": [
@@ -22,30 +22,190 @@
         "Standard_RAGRS",
         "Premium_LRS"
       ]
+    },
+    "ARMTest-VMName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ARMTest-VMAdminUserName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ARMTest-VMAdminPassword": {
+      "type": "securestring"
+    },
+    "ARMTest-VMWindowsOSVersion": {
+      "type": "string",
+      "defaultValue": "2012-R2-Datacenter",
+      "allowedValues": [
+        "2008-R2-SP1",
+        "2012-Datacenter",
+        "2012-R2-Datacenter",
+        "Windows-Server-Technical-Preview"
+      ]
+    },
+    "ARMTest-VMSize": {
+      "type": "string",
+      "defaultValue": "Standard_D2_v2",
+      "allowedValues": [
+        "Standard_D2_v2",
+        "Standard_D2_v3"
+      ]
+    },
+    "ARMTest-VM-PIPDnsName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "ARMTestVMDNS"
     }
   },
 
+  "variables": {
+    "ARMTest_ResourceGroupName": "ARMTest-RG",
+    "ARMTest_StorageAccountName": "ARMTest-SA",
+    "ARMTest-VnetPrefix": "10.0.0.0/16",
+    "ARMTest-VnetSubnet1Name": "ARMTest_Subnet",
+    "ARMTest-VnetSubnet1Prefix": "10.0.0.0/24",
+    "ARMTest-VMImagePublisher": "MicrosoftWindowsServer",
+    "ARMTest-VMImageOffer": "WindowsServer",
+    "ARMTest-VMOSDiskName": "ARMTest-VMOSDisk",
+    "ARMTest-VMVnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'ARMTest-Vnet')]",
+    "ARMTest-VMSubnetRef": "[concat(variables('ARMTest-VMVnetID'), '/subnets/', variables('ARMTest-VnetSubnet1Name'))]",
+    "ARMTest-VMStorageAccountContainerName": "vhds",
+    "ARMTest-VMNicName": "[concat(parameters('ARMTest-VMName'), '-NIC')]",
+    "ARMTest-VM-PIPName": "ARMTest-VM-PIP"
+  },
+
   "resources": [
+
     {
-      "name": "[variables('armtestsaName')]",
+      "name": "[variables('ARMTest_StorageAccountName')]",
       "type": "Microsoft.Storage/storageAccounts",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "apiVersion": "2016-01-01",
       "sku": {
-        "name": "[parameters('armtestsaType')]"
+        "name": "[parameters('StorageAccountType')]"
       },
-      "dependsOn": [ ],
+      "dependsOn": [],
       "tags": {
-        "displayName": "armtestsa"
+        "displayName": "StorageAccount"
       },
       "kind": "Storage"
+    },
+    {
+      "name": "ARMTest-Vnet",
+      "type": "Microsoft.Network/virtualNetworks",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "ARMTest-Vnet"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('ARMTest-VnetPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('ARMTest-VnetSubnet1Name')]",
+            "properties": {
+              "addressPrefix": "[variables('ARMTest-VnetSubnet1Prefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[variables('ARMTest-VMNicName')]",
+      "type": "Microsoft.Network/networkInterfaces",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', 'ARMTest-Vnet')]",
+        "[resourceId('Microsoft.Network/publicIPAddresses', variables('ARMTest-VM-PIPName'))]"
+      ],
+      "tags": {
+        "displayName": "ARMTest-VMNic"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "[variables('ARMTest-VMSubnetRef')]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('ARMTest-VM-PIPName'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "[parameters('ARMTest-VMName')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "location": "[parameters('location')]",
+      "apiVersion": "2015-06-15",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('ARMTest_StorageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces', variables('ARMTest-VMNicName'))]"
+      ],
+      "tags": {
+        "displayName": "ARMTest-VM"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('ARMTest-VMSize')]"
+        },
+        "osProfile": {
+          "computerName": "[parameters('ARMTest-VMName')]",
+          "adminUsername": "[parameters('ARMTest-VMAdminUsername')]",
+          "adminPassword": "[parameters('ARMTest-VMAdminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('ARMTest-VMImagePublisher')]",
+            "offer": "[variables('ARMTest-VMImageOffer')]",
+            "sku": "[parameters('ARMTest-VMWindowsOSVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "ARMTest-VMOSDisk",
+            "vhd": {
+              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', variables('ARMTest_StorageAccountName')), '2016-01-01').primaryEndpoints.blob, variables('ARMTest-VMStorageAccountContainerName'), '/', variables('ARMTest-VMOSDiskName'), '.vhd')]"
+            },
+            "caching": "ReadWrite",
+            "createOption": "FromImage"
+          }
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('ARMTest-VMNicName'))]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "[variables('ARMTest-VM-PIPName')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "ARMTest-VM-PIP"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[parameters('ARMTest-VM-PIPDnsName')]"
+        }
+      }
     }
-
-    
-
-  ],
-  "variables": {
-    "armtestsaName": "[concat('armtestsa', uniqueString(resourceGroup().id))]"
-  }
-
+  ]
 }
