@@ -1,7 +1,22 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters": {},
+  "parameters": {
+    "VMSku":{
+      "type": "string",
+      "allowedValues": [
+        "Standard_DS1_v2",
+  
+        "Standard_DS2_v2",
+
+        "Standard_DS3_v2",
+
+        "Standard_DS4_v2",
+
+        "Standard_DS5_v2"
+      ]
+    }
+  },
   "variables": {
     "ARMTest-VnetPrefix": "10.0.0.0/16",
     "ARMTest-VnetSubnet1Name": "Subnet-1",
