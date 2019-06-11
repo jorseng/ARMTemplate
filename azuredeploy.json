@@ -10,7 +10,8 @@
       "type": "string"
     },
     "WhatIsThis":{
-      "type":"string"
+      "type":"string",
+      "allowedValues": ["A","B","C"]
     }
   },
   "variables": {
