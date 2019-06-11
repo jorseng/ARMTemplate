@@ -12,7 +12,7 @@
     "ASAdmin": {
       "type": "string"
     },
-    "armtestsaType": {
+    "othertype": {
       "type": "string",
       "defaultValue": "Standard_LRS",
       "allowedValues": [
@@ -21,14 +21,6 @@
         "Standard_GRS",
         "Standard_RAGRS",
         "Premium_LRS"
-      ]
-    },
-    "Something":{
-      "type": "string",
-      "defaultValue": "ABC",
-      "allowedValues": [
-        "Standard ABC",
-        "Premium ABC"
       ]
     }
   },
@@ -40,7 +32,7 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2016-01-01",
       "sku": {
-        "name": "[parameters('armtestsaType')]"
+        "name": "[parameters('othertype')]"
       },
       "dependsOn": [ ],
       "tags": {
