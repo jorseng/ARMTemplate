@@ -32,7 +32,7 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2016-01-01",
       "sku": {
-        "name": "[parameters('othertype')]"
+        "name": "Standard_LRS"
       },
       "dependsOn": [ ],
       "tags": {
