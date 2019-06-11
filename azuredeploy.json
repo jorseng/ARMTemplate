@@ -14,9 +14,9 @@
     },
     "othertype": {
       "type": "string",
-      "defaultValue": "Standard_LRS",
+      "defaultValue": "A",
       "allowedValues": [
-        "Standard_LRS",
+        "B",
         "Standard_ZRS",
         "Standard_GRS",
         "Standard_RAGRS",
