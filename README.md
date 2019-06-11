@@ -9,5 +9,6 @@ Azure deploy button
 
 HTML Tag for Deploy Button
 <a href="https://azuredeploy.net/" target="_blank">
+    <br>
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
