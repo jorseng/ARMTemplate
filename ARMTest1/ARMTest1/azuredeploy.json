@@ -5,21 +5,13 @@
   "contentVersion": "1.0.0.0",
 
   "parameters": {
-
     "location": {
-
       "defaultValue": "west us 2",
-
       "type": "string"
-
     },
-
     "ASAdmin": {
-
       "type": "string"
-
     }
-
   },
 
   "variables": {
@@ -27,9 +19,7 @@
     "openParantheses" : "(",
 
     "closeParantheses" : ")",
-
     
-
     "resourceGroupLen":"[length(resourceGroup().name)]",
 
     "charToTakeFromEnd":4,
