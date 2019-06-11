@@ -6,7 +6,7 @@
 
   "parameters": {
     "location": {
-      "defaultValue": "west us 2",
+      "defaultValue": "Southeast Asia",
       "type": "string"
     },
     "ASAdmin": {
@@ -21,6 +21,14 @@
         "Standard_GRS",
         "Standard_RAGRS",
         "Premium_LRS"
+      ]
+    },
+    "Something":{
+      "type": "string",
+      "defaultValue": "ABC",
+      "allowedValues": [
+        "Standard ABC",
+        "Premium ABC"
       ]
     }
   },
