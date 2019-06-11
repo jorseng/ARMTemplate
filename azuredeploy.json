@@ -8,6 +8,9 @@
     },
     "ASAdmin": {
       "type": "string"
+    },
+    "WhatIsThis":{
+      "type":"string"
     }
   },
   "variables": {
