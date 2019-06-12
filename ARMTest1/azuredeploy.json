@@ -197,7 +197,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "ARMTest-VM/CustomScript",
+      "name": "[concat(parameters('ARMTest-VMName'),'/InitializationScript')]",
       "apiVersion": "2018-06-01",
       "location": "[resourceGroup().location]",
       "dependsOn": [
