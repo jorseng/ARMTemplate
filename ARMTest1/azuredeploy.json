@@ -197,7 +197,7 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "ARMTestVM/CustomScript",
+      "name": "ARMTest-VM/CustomScript",
       "apiVersion": "2018-06-01",
       "location": "[resourceGroup().location]",
       "dependsOn": [
