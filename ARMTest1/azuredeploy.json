@@ -75,7 +75,7 @@
       },
       "dependsOn": [],
       "tags": {
-        "displayName": "StorageAccount"
+        "displayName": "ARMTestStorageAccount"
       },
       "kind": "Storage"
     },
@@ -197,8 +197,8 @@
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "MyCustomScriptExtension",
-      "apiVersion": "2015-05-01-preview",
+      "name": "ARMTestVM/CustomScript",
+      "apiVersion": "2018-06-01",
       "location": "[resourceGroup().location]",
       "dependsOn": [
         "[concat('Microsoft.Compute/virtualMachines/',parameters('ARMTest-VMName'))]"
@@ -206,15 +206,13 @@
       "properties": {
         "publisher": "Microsoft.Compute",
         "type": "CustomScriptExtension",
-        "typeHandlerVersion": "1.7",
+        "typeHandlerVersion": "1.9",
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "http://Yourstorageaccount.blob.core.windows.net/customscriptfiles/start.ps1",
-            "http://Yourstorageaccount.blob.core.windows.net/customscriptfiles/secondaryScript.ps1"
-
+            "https://github.com/jorseng/ARMTemplate/blob/master/PSScript/InitializationScript.ps1"
           ],
-          "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File start.ps1"
+          "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File InitializationScript.ps1"
         }
       }
     }
