@@ -5,10 +5,6 @@
   "contentVersion": "1.0.0.0",
 
   "parameters": {
-    "location": {
-      "defaultValue": "Southeast Asia",
-      "type": "string"
-    },
     "StorageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -72,7 +68,7 @@
     {
       "name": "[variables('ARMTest_StorageAccountName')]",
       "type": "Microsoft.Storage/storageAccounts",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "apiVersion": "2016-01-01",
       "sku": {
         "name": "[parameters('StorageAccountType')]"
@@ -86,7 +82,7 @@
     {
       "name": "ARMTest-Vnet",
       "type": "Microsoft.Network/virtualNetworks",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "apiVersion": "2016-03-30",
       "dependsOn": [],
       "tags": {
@@ -111,7 +107,7 @@
     {
       "name": "[variables('ARMTest-VMNicName')]",
       "type": "Microsoft.Network/networkInterfaces",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "apiVersion": "2016-03-30",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', 'ARMTest-Vnet')]",
@@ -140,7 +136,7 @@
     {
       "name": "[parameters('ARMTest-VMName')]",
       "type": "Microsoft.Compute/virtualMachines",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
         "[resourceId('Microsoft.Storage/storageAccounts', variables('ARMTest_StorageAccountName'))]",
@@ -186,7 +182,7 @@
     {
       "name": "[variables('ARMTest-PIPName')]",
       "type": "Microsoft.Network/publicIPAddresses",
-      "location": "[parameters('location')]",
+      "location": "[resourceGroup().location]",
       "apiVersion": "2016-03-30",
       "dependsOn": [],
       "tags": {
