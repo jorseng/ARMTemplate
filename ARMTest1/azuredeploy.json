@@ -5,6 +5,10 @@
   "contentVersion": "1.0.0.0",
 
   "parameters": {
+    "ARMTest_StorageAccountName": {
+      "type": "string",
+      "defaultValue": "jsarmteststorageaccount"
+    },
     "StorageAccountType": {
       "type": "string",
       "defaultValue": "Standard_LRS",
@@ -49,7 +53,6 @@
   },
 
   "variables": {
-    "ARMTest_StorageAccountName": "jsarmteststorageaccount",
     "ARMTest-VnetPrefix": "10.0.0.0/16",
     "ARMTest-VnetSubnet1Name": "ARMTest_Subnet",
     "ARMTest-VnetSubnet1Prefix": "10.0.0.0/24",
@@ -66,7 +69,7 @@
 
   "resources": [
     {
-      "name": "[variables('ARMTest_StorageAccountName')]",
+      "name": "[parameters('ARMTest_StorageAccountName')]",
       "type": "Microsoft.Storage/storageAccounts",
       "location": "[resourceGroup().location]",
       "apiVersion": "2016-01-01",
@@ -139,7 +142,7 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2015-06-15",
       "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('ARMTest_StorageAccountName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', parameters('ARMTest_StorageAccountName'))]",
         "[resourceId('Microsoft.Network/networkInterfaces', variables('ARMTest-VMNicName'))]"
       ],
       "tags": {
@@ -164,7 +167,7 @@
           "osDisk": {
             "name": "ARMTest-VMOSDisk",
             "vhd": {
-              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', variables('ARMTest_StorageAccountName')), '2016-01-01').primaryEndpoints.blob, variables('ARMTest-VMStorageAccountContainerName'), '/', variables('ARMTest-VMOSDiskName'), '.vhd')]"
+              "uri": "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', parameters('ARMTest_StorageAccountName')), '2016-01-01').primaryEndpoints.blob, variables('ARMTest-VMStorageAccountContainerName'), '/', variables('ARMTest-VMOSDiskName'), '.vhd')]"
             },
             "caching": "ReadWrite",
             "createOption": "FromImage"
