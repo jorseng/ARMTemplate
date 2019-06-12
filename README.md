@@ -15,4 +15,4 @@ https://azure.microsoft.com/en-gb/blog/deploy-to-azure-button-for-azure-websites
 https://github.com/kuharan/Azure-Button-Test/blob/master/azuredeploy.json
 
 
-[![Click to deploy template on Azure](http://azuredeploy.net/deploybutton.png "Click to deploy template on Azure")](https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/jorseng/ARMTemplate/master/azuredeploy.json)
+[![Click to deploy template on Azure](http://azuredeploy.net/deploybutton.png "Click to deploy template on Azure")](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjorseng%2FARMTemplate%2Fmaster%2Fazuredeploy.json)
