@@ -49,6 +49,50 @@
         "Standard_D2_v2",
         "Standard_D2_v3"
       ]
+    },
+    "terratest-sql-serverAdminLogin": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "jorseng"
+    },
+    "terratest-sql-serverAdminLoginPassword": {
+      "type": "securestring",
+      "defaultValue": "jorPasssengw0rd"
+    },
+    "terratest-sqldbName": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "terratest-sqldb"
+    },
+    "terratest-sqldbCollation": {
+      "type": "string",
+      "minLength": 1,
+      "defaultValue": "SQL_Latin1_General_CP1_CI_AS"
+    },
+    "terratest-sqldbEdition": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ]
+    },
+    "terratest-sqldbRequestedServiceObjectiveName": {
+      "type": "string",
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "S0",
+        "S1",
+        "S2",
+        "P1",
+        "P2",
+        "P3"
+      ],
+      "metadata": {
+        "description": "Describes the performance level for Edition"
+      }
     }
   },
 
@@ -64,7 +108,8 @@
     "ARMTest-VMStorageAccountContainerName": "vhds",
     "ARMTest-VMNicName": "[concat(parameters('ARMTest-VMName'), '-NIC')]",
     "ARMTest-PIPName": "ARMTest-PIP",
-    "ARMTest-PIPDnsName": "armtestdns"
+    "ARMTest-PIPDnsName": "armtestdns",
+    "terratest-sql-serverName": "terratest-sql-server"
   },
 
   "resources": [
@@ -197,6 +242,54 @@
           "domainNameLabel": "[variables('ARMTest-PIPDnsName')]"
         }
       }
+    },
+    {
+      "name": "[variables('terratest-sql-serverName')]",
+      "type": "Microsoft.Sql/servers",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2014-04-01-preview",
+      "dependsOn": [],
+      "tags": {
+        "displayName": "terratest-sql-server"
+      },
+      "properties": {
+        "administratorLogin": "[parameters('terratest-sql-serverAdminLogin')]",
+        "administratorLoginPassword": "[parameters('terratest-sql-serverAdminLoginPassword')]"
+      },
+      "resources": [
+        {
+          "name": "AllowAllWindowsAzureIps",
+          "type": "firewallrules",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('terratest-sql-serverName'))]"
+          ],
+          "properties": {
+            "startIpAddress": "0.0.0.0",
+            "endIpAddress": "0.0.0.0"
+          }
+        },
+        {
+          "name": "[parameters('terratest-sqldbName')]",
+          "type": "databases",
+          "location": "[resourceGroup().location]",
+          "apiVersion": "2014-04-01-preview",
+          "dependsOn": [
+            "[resourceId('Microsoft.Sql/servers', variables('terratest-sql-serverName'))]"
+          ],
+          "tags": {
+            "displayName": "terratest-sqldb"
+          },
+          "properties": {
+            "collation": "[parameters('terratest-sqldbCollation')]",
+            "edition": "[parameters('terratest-sqldbEdition')]",
+            "maxSizeBytes": "1073741824",
+            "requestedServiceObjectiveName": "[parameters('terratest-sqldbRequestedServiceObjectiveName')]"
+          }
+        }
+
+      ]
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",

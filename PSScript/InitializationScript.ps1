@@ -13,7 +13,10 @@ Add-WindowsFeature Web-Default-Doc;
 Add-WindowsFeature Web-Http-Errors;
 Add-WindowsFeature Web-Static-Content;
 
-#Move-Item C:\source\WebFormApp C:\inetpub\wwwroot;
+mkdir C:\source;
+Invoke-WebRequest https://webformapp.blob.core.windows.net/webformappcontainer/WebFormApp.zip -OutFile C:\source\WebFormApp.zip;
+Expand-Archive C:\source\WebFormApp.zip -DestinationPath C:\source;
+Move-Item C:\source\WebFormApp C:\inetpub\wwwroot;
 
 function Initialize-DB {
 
@@ -38,5 +41,5 @@ function Initialize-DB {
     $dataset.Tables
 }
 
-#Initialize-DB;
-#New-WebApplication -Name WebFormApp -Site 'Default Web Site' -PhysicalPath C:\inetpub\wwwroot\WebFormApp -ApplicationPool DefaultAppPool;
+Initialize-DB;
+New-WebApplication -Name WebFormApp -Site 'Default Web Site' -PhysicalPath C:\inetpub\wwwroot\WebFormApp -ApplicationPool DefaultAppPool;
