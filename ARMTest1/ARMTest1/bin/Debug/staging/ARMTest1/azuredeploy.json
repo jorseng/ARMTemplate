@@ -87,9 +87,9 @@
     {
       "name": "ARMTest-Vnet",
       "type": "Microsoft.Network/virtualNetworks",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "apiVersion": "2016-03-30",
-      "dependsOn": [ ],
+      "dependsOn": [],
       "tags": {
         "displayName": "ARMTest-Vnet"
       },
