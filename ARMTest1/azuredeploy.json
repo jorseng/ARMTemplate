@@ -194,6 +194,29 @@
           "domainNameLabel": "[variables('ARMTest-PIPDnsName')]"
         }
       }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "name": "MyCustomScriptExtension",
+      "apiVersion": "2015-05-01-preview",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[concat('Microsoft.Compute/virtualMachines/',parameters('ARMTest-VMName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "CustomScriptExtension",
+        "typeHandlerVersion": "1.7",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "fileUris": [
+            "http://Yourstorageaccount.blob.core.windows.net/customscriptfiles/start.ps1",
+            "http://Yourstorageaccount.blob.core.windows.net/customscriptfiles/secondaryScript.ps1"
+
+          ],
+          "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File start.ps1"
+        }
+      }
     }
   ]
 }
