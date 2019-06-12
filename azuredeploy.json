@@ -70,7 +70,6 @@
   },
 
   "resources": [
-
     {
       "name": "[variables('ARMTest_StorageAccountName')]",
       "type": "Microsoft.Storage/storageAccounts",
@@ -113,7 +112,7 @@
     {
       "name": "[variables('ARMTest-VMNicName')]",
       "type": "Microsoft.Network/networkInterfaces",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "apiVersion": "2016-03-30",
       "dependsOn": [
         "[resourceId('Microsoft.Network/virtualNetworks', 'ARMTest-Vnet')]",
@@ -188,9 +187,9 @@
     {
       "name": "[variables('ARMTest-PIPName')]",
       "type": "Microsoft.Network/publicIPAddresses",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('location')]",
       "apiVersion": "2016-03-30",
-      "dependsOn": [ ],
+      "dependsOn": [],
       "tags": {
         "displayName": "ARMTest-PIP"
       },
