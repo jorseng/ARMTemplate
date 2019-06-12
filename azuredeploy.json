@@ -66,7 +66,7 @@
     "ARMTest-VMStorageAccountContainerName": "vhds",
     "ARMTest-VMNicName": "[concat(parameters('ARMTest-VMName'), '-NIC')]",
     "ARMTest-PIPName": "ARMTest-PIP",
-    "ARMTest-PIPDnsName": "[parameters('ARMTest-VMName')]"
+    "ARMTest-PIPDnsName": "armtestdns"
   },
 
   "resources": [

@@ -64,7 +64,9 @@
     "ARMTest-VMVnetID": "[resourceId('Microsoft.Network/virtualNetworks', 'ARMTest-Vnet')]",
     "ARMTest-VMSubnetRef": "[concat(variables('ARMTest-VMVnetID'), '/subnets/', variables('ARMTest-VnetSubnet1Name'))]",
     "ARMTest-VMStorageAccountContainerName": "vhds",
-    "ARMTest-VMNicName": "[concat(parameters('ARMTest-VMName'), '-NIC')]"
+    "ARMTest-VMNicName": "[concat(parameters('ARMTest-VMName'), '-NIC')]",
+    "ARMTest-PIPName": "ARMTest-PIP",
+    "ARMTest-PIPDnsName": "[parameters('ARMTest-VMName')]"
   },
 
   "resources": [
@@ -114,7 +116,8 @@
       "location": "[resourceGroup().location]",
       "apiVersion": "2016-03-30",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/virtualNetworks', 'ARMTest-Vnet')]"
+        "[resourceId('Microsoft.Network/virtualNetworks', 'ARMTest-Vnet')]",
+        "[resourceId('Microsoft.Network/publicIPAddresses', variables('ARMTest-PIPName'))]"
       ],
       "tags": {
         "displayName": "ARMTest-VMNic"
@@ -127,6 +130,9 @@
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
                 "id": "[variables('ARMTest-VMSubnetRef')]"
+              },
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('ARMTest-PIPName'))]"
               }
             }
           }
@@ -176,6 +182,22 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('ARMTest-VMNicName'))]"
             }
           ]
+        }
+      }
+    },
+    {
+      "name": "[variables('ARMTest-PIPName')]",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "location": "[resourceGroup().location]",
+      "apiVersion": "2016-03-30",
+      "dependsOn": [ ],
+      "tags": {
+        "displayName": "ARMTest-PIP"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic",
+        "dnsSettings": {
+          "domainNameLabel": "[variables('ARMTest-PIPDnsName')]"
         }
       }
     }
