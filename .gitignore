@@ -1,3 +1,8 @@
+#Folders
 ARMTest1/.vs/*
+ARMTest1/bin/*
+ARMTest1/obj/*
 
-ARMTest1/.vs/ARMTest1.sln
+#Files
+ARMTest1/ARMTest1.sln
+ARMTest1/ARMTest1/ARMTest1.deployproj
