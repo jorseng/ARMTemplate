@@ -1,6 +1,6 @@
 #Folders
 ARMTest1/.vs/*
-#ARMTest1/bin/*
+ARMTest1/bin/*
 ARMTest1/obj/*
 
 #Files
