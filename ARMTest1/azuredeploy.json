@@ -210,7 +210,7 @@
         "autoUpgradeMinorVersion": true,
         "settings": {
           "fileUris": [
-            "https://github.com/jorseng/ARMTemplate/blob/master/PSScript/InitializationScript.ps1"
+            "https://raw.githubusercontent.com/jorseng/ARMTemplate/master/PSScript/InitializationScript.ps1"
           ],
           "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File InitializationScript.ps1"
         }
